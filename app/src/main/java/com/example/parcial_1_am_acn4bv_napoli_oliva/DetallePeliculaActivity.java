@@ -35,19 +35,19 @@ public class DetallePeliculaActivity extends AppCompatActivity {
         ImageView imgPoster = findViewById(R.id.detalleImagen);
         Button btnVolver = findViewById(R.id.btnVolver);
         Button btnFavorito = findViewById(R.id.btnFavorito);
-        Pelicula pelicula = (Pelicula) getIntent().getSerializableExtra("PELICULA_SELECCIONADA");
+        peliculaActual = (Pelicula) getIntent().getSerializableExtra("PELICULA_SELECCIONADA");
 
-        if (pelicula != null) {
+        if (peliculaActual != null) {
 
-            txtTitulo.setText(pelicula.getTitulo());
-            txtDatos.setText(pelicula.getGenero() + " (" + pelicula.getAnio() + ")");
+            txtTitulo.setText(peliculaActual.getTitulo());
+            txtDatos.setText(peliculaActual.getGenero() + " (" + peliculaActual.getAnio() + ")");
 
             Glide.with(this)
-                    .load(pelicula.getUrlImagen())
+                    .load(peliculaActual.getUrlImagen())
                     .into(imgPoster);
 
             // urlDescripcion de Firebase
-            txtDescripcion.setText(pelicula.getUrlDescripcion());
+            txtDescripcion.setText(peliculaActual.getUrlDescripcion());
 
             btnVolver.setOnClickListener(v -> finish());
 
@@ -60,7 +60,7 @@ public class DetallePeliculaActivity extends AppCompatActivity {
 
                 // Ahora se valida si existe esa pelicula en la lista con id
                 db.collection("favoritos")
-                        .whereEqualTo("id", pelicula.getId())
+                        .whereEqualTo("id", peliculaActual.getId())
                         .get()
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
@@ -68,7 +68,7 @@ public class DetallePeliculaActivity extends AppCompatActivity {
                                     Toast.makeText(this, "Ya agregaste esta película", Toast.LENGTH_SHORT).show();
                                     btnFavorito.setText("Ya agregada");
                                 } else {
-                                    guardarEnFirebase(db, pelicula, btnFavorito);
+                                    guardarEnFirebase(db, peliculaActual, btnFavorito);
                                 }
                             } else {
                                 Toast.makeText(this, "Error al verificar", Toast.LENGTH_SHORT).show();
@@ -77,28 +77,35 @@ public class DetallePeliculaActivity extends AppCompatActivity {
                             }
                         });
             });
+
+            // Reservar entradas
+            inputCantidadEntradas = findViewById(R.id.inputCantidadEntradas);
+            txtCostoTotal = findViewById(R.id.txtCostoTotal);
+            btnConfirmarReserva = findViewById(R.id.btnConfirmarReserva);
+
+            // calculo de entrada, por defecto 1
+            calcularCostoTotal(1);
+
+            // listener para el calculo dinamico
+            inputCantidadEntradas.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void afterTextChanged(Editable s) { }
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    String strCantidad = s.toString();
+                    int cantidad = strCantidad.isEmpty() ? 0 : Integer.parseInt(strCantidad);
+                    calcularCostoTotal(cantidad);
+                }
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            });
+            btnConfirmarReserva.setOnClickListener(v -> confirmarReserva());
+
+        } else {
+            // si la pelicula es nula, se cierra
+            Toast.makeText(this, "Error: No se pudo cargar la información de la película.", Toast.LENGTH_LONG).show();
+            finish();
         }
-
-        // Reservar entradas
-        inputCantidadEntradas = findViewById(R.id.inputCantidadEntradas);
-        txtCostoTotal = findViewById(R.id.txtCostoTotal);
-        btnConfirmarReserva = findViewById(R.id.btnConfirmarReserva);
-
-        // calculo de entrada, por defecto 1
-        calcularCostoTotal(1);
-
-        // listener para el calculo dinamico
-        inputCantidadEntradas.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void afterTextChanged(Editable s) { }
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                int cantidad = s.toString().isEmpty() ? 0 : Integer.parseInt(s.toString());
-                calcularCostoTotal(cantidad);
-            }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
-        });
     }
 
     private void guardarEnFirebase(FirebaseFirestore db, Pelicula p, Button btn) {
@@ -143,8 +150,7 @@ public class DetallePeliculaActivity extends AppCompatActivity {
         // costo total del TextView
         String costoTotal = txtCostoTotal.getText().toString().replace("Costo Total: ", "");
 
-        String mensaje = "¡Reserva confirmada! Película: '" + peliculaActual.getTitulo() +
-                "' (" + cantidad + " entradas). Total a pagar: " + costoTotal;
+        String mensaje = "¡Reserva confirmada! Película: '" + peliculaActual.getTitulo() + "' (" + cantidad + " entradas). Total a pagar: " + costoTotal;
 
         Toast.makeText(this, mensaje, Toast.LENGTH_LONG).show();
     }

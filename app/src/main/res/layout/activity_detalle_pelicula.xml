@@ -129,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="Confirmar Reserva"
-                    android:backgroundTint="@color/colorInteractivo"
+                    android:backgroundTint="@color/colorAcento"
                     android:textColor="@color/colorTextoPrincipal" />
 
             </LinearLayout>
@@ -143,7 +143,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/btn_volver"
-        android:backgroundTint="#333333"
+        android:backgroundTint="@color/colorAcento"
         android:textColor="@color/colorTextoPrincipal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
