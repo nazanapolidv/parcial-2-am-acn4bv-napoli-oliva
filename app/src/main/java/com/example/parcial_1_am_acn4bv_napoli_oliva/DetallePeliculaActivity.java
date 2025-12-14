@@ -2,6 +2,7 @@ package com.example.parcial_1_am_acn4bv_napoli_oliva;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -10,7 +11,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.bumptech.glide.Glide;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class DetallePeliculaActivity extends AppCompatActivity {
+    // Precio por entrada ($12000)
+    private static final double PRECIO_ENTRADA = 12000;
+    private EditText inputCantidadEntradas;
+    private TextView txtCostoTotal;
+    private Button btnConfirmarReserva;
+    private Pelicula peliculaActual;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +78,27 @@ public class DetallePeliculaActivity extends AppCompatActivity {
                         });
             });
         }
+
+        // Reservar entradas
+        inputCantidadEntradas = findViewById(R.id.inputCantidadEntradas);
+        txtCostoTotal = findViewById(R.id.txtCostoTotal);
+        btnConfirmarReserva = findViewById(R.id.btnConfirmarReserva);
+
+        // calculo de entrada, por defecto 1
+        calcularCostoTotal(1);
+
+        // listener para el calculo dinamico
+        inputCantidadEntradas.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) { }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                int cantidad = s.toString().isEmpty() ? 0 : Integer.parseInt(s.toString());
+                calcularCostoTotal(cantidad);
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+        });
     }
 
     private void guardarEnFirebase(FirebaseFirestore db, Pelicula p, Button btn) {
@@ -81,5 +114,38 @@ public class DetallePeliculaActivity extends AppCompatActivity {
                     btn.setEnabled(true);
                     btn.setText("Intentar de nuevo");
                 });
+    }
+
+    // calcular valor total de la reserva
+    private void calcularCostoTotal (int cantidad){
+        if (cantidad < 0 || cantidad > 99){
+            cantidad = 0;
+        }
+
+        double costoTotal = cantidad * PRECIO_ENTRADA;
+
+        // formato de la moneda
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("es", "AR"));
+        String costoFormateado = currencyFormat.format(costoTotal);
+
+        txtCostoTotal.setText("Costo Total: " + costoFormateado);
+    }
+
+    private void confirmarReserva (){
+        String strCantidad = inputCantidadEntradas.getText().toString();
+        int cantidad = strCantidad.isEmpty() ? 0 : Integer.parseInt(strCantidad);
+
+        if (cantidad <= 0) {
+            Toast.makeText(this, "Selecciona al menos una entrada.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // costo total del TextView
+        String costoTotal = txtCostoTotal.getText().toString().replace("Costo Total: ", "");
+
+        String mensaje = "¡Reserva confirmada! Película: '" + peliculaActual.getTitulo() +
+                "' (" + cantidad + " entradas). Total a pagar: " + costoTotal;
+
+        Toast.makeText(this, mensaje, Toast.LENGTH_LONG).show();
     }
 }

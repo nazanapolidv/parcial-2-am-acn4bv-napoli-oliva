@@ -67,18 +67,77 @@
         app:layout_constraintTop_toBottomOf="@id/detalleInfoLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btnVolver" >
+        app:layout_constraintBottom_toTopOf="@id/btnVolver">
 
-        <TextView
-            android:id="@+id/detalleDescripcion"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorTextoPrincipal"
-            android:textSize="18sp"
-            tools:text="Esta es la descripción detallada de la película. Es un texto largo para justificar el uso del ScrollView..." />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/detalleDescripcion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextoPrincipal"
+                android:textSize="18sp"
+                tools:text="Esta es la descripción detallada de la película. Es un texto largo para justificar el uso del ScrollView..." />
+
+            <LinearLayout
+                android:id="@+id/reservaLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/card_background">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Reserva de Entradas"
+                    android:textColor="@color/colorAcento"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/inputCantidadEntradas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:hint="Cantidad de Entradas"
+                    android:inputType="number"
+                    android:text="1"
+                    android:maxLength="2"
+                    android:textColorHint="@color/colorTextoSecundario"
+                    android:textColor="@color/colorTextoPrincipal"
+                    android:background="@drawable/rounded_edittext"
+                    android:padding="12dp" />
+
+                <TextView
+                    android:id="@+id/txtCostoTotal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Costo Total: $0.00"
+                    android:textColor="@color/colorTextoPrincipal"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnConfirmarReserva"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Confirmar Reserva"
+                    android:backgroundTint="@color/colorInteractivo"
+                    android:textColor="@color/colorTextoPrincipal" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </ScrollView>
-    
+
     <Button
         android:id="@+id/btnVolver"
         android:layout_width="0dp"
