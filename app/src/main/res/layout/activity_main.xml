@@ -43,6 +43,23 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp" />
 
+        <Button
+            android:id="@+id/btnCerrarSesion"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="CERRAR SESIÓN"
+            android:textColor="@color/colorTextoPrincipal"
+            android:textSize="12sp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:background="@drawable/rounded_button_rojo_suave" android:textAllCaps="true"
+            android:stateListAnimator="@null"
+            android:elevation="4dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -76,7 +93,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Ver Mis Favoritos"
-        android:backgroundTint="@color/colorBotonNeutro"
+        android:backgroundTint="@color/colorAcento"
         android:textColor="@color/colorTextoPrincipal"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"

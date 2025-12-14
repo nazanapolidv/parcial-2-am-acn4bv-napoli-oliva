@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_degradado"
+    android:padding="32dp">
+
+    <TextView
+        android:id="@+id/txtLoginHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Iniciar Sesión"
+        android:textColor="@color/colorAcento"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="64dp" />
+
+    <EditText
+        android:id="@+id/editEmailLogin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:textColorHint="@color/colorTextoSecundario"
+        android:textColor="@color/colorTextoPrincipal"
+        android:inputType="textEmailAddress"
+        android:background="@drawable/rounded_edittext"
+        android:padding="12dp"
+        android:layout_marginTop="48dp"
+        app:layout_constraintTop_toBottomOf="@id/txtLoginHeader"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/editPasswordLogin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Contraseña"
+        android:textColorHint="@color/colorTextoSecundario"
+        android:textColor="@color/colorTextoPrincipal"
+        android:inputType="textPassword"
+        android:background="@drawable/rounded_edittext"
+        android:padding="12dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/editEmailLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Acceder"
+        android:backgroundTint="@color/colorAcento"
+        android:textColor="@color/colorTextoPrincipal"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@id/editPasswordLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/txtIrRegistro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿No tienes cuenta? Regístrate aquí."
+        android:textColor="@color/colorTextoSecundario"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/btnLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
