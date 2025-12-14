@@ -91,13 +91,13 @@ public class DetallePeliculaActivity extends AppCompatActivity {
                 @Override
                 public void afterTextChanged(Editable s) { }
                 @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
                     String strCantidad = s.toString();
                     int cantidad = strCantidad.isEmpty() ? 0 : Integer.parseInt(strCantidad);
                     calcularCostoTotal(cantidad);
                 }
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) { }
             });
             btnConfirmarReserva.setOnClickListener(v -> confirmarReserva());
 
