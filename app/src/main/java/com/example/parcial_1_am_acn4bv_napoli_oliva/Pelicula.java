@@ -8,6 +8,7 @@ public class Pelicula implements Serializable {
     private String genero;
     private String urlImagen;
     private String urlDescripcion;
+    private String userId; // usado para favoritos
 
     public Pelicula(int id, String titulo, int anio, String genero, String urlImagen, String urlDescripcion){
         this.id = id;
@@ -19,33 +20,31 @@ public class Pelicula implements Serializable {
     }
 
     // constructor vacio para firebase
-    public Pelicula() {
-    }
+    public Pelicula (){ }
 
-    public int getId(){
-        return id;
-    }
-
-    public String getTitulo(){
-        return titulo;
-    }
-
+    // GETTERS
+    public int getId (){ return id; }
+    public String getTitulo(){ return titulo; }
     public int getAnio(){
         return anio;
     }
-
     public String getGenero(){
         return genero;
     }
-
     public String getUrlImagen(){
         return urlImagen;
     }
-
     public String getUrlDescripcion() {
         return urlDescripcion;
     }
+    public String getUserId() { return userId; }
 
-    // public String getDescripcion(){ return titulo + " (" + anio + ") - Genero: " + genero; }
-
+    // SETTERS
+    public void setId(int id) { this.id = id; }
+    public void setTitulo(String titulo) { this.titulo = titulo; }
+    public void setAnio(int anio) { this.anio = anio; }
+    public void setGenero(String genero) { this.genero = genero; }
+    public void setUrlImagen(String urlImagen) { this.urlImagen = urlImagen; }
+    public void setUrlDescripcion(String urlDescripcion) { this.urlDescripcion = urlDescripcion; }
+    public void setUserId(String userId) { this.userId = userId; }
 }
