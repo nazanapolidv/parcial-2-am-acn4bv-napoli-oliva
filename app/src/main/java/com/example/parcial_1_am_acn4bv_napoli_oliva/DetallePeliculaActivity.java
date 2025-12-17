@@ -34,6 +34,7 @@ public class DetallePeliculaActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String currentUserId;
     private String favoriteDocId = null;
+    private android.widget.RatingBar ratingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,16 @@ public class DetallePeliculaActivity extends AppCompatActivity {
         ImageView imgPoster = findViewById(R.id.detalleImagen);
         Button btnVolver = findViewById(R.id.btnVolver);
         Button btnFavorito = findViewById(R.id.btnFavorito);
+
+        //estrellas review
+        ratingBar = findViewById(R.id.ratingBar);
+        ratingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
+            if (fromUser) {
+                Toast.makeText(DetallePeliculaActivity.this,
+                        "Tu calificacion fue de: " + rating + " estrellas",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // btn trailer
         btnTrailer = findViewById(R.id.btnTrailer);
